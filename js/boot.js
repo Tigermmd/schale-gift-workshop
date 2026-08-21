@@ -24,7 +24,7 @@
       return;
     }
 
-    import(`./app.js?v=${BUILD_VERSION}&ui=v113&knowledge=v2`).catch((error) => {
+    import(`./app.js?v=${BUILD_VERSION}&ui=v113&knowledge=v3`).catch((error) => {
       console.error("Schale dashboard failed to start", error);
       showBootError("页面加载失败", "请刷新页面；如果仍然失败，请重新启动本地 harness_server.py。");
     });

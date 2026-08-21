@@ -1,19 +1,19 @@
 import { loadDashboardData } from "./data-loader.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
 import { filterStudents, getCraftingMechanismSummary, readBrandStudentId, readPackageTargetStudentId, readSelectedStudentId, writeBrandStudentId, writeSelectedStudentId } from "./dashboard-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
-import { LANGUAGE_OPTIONS, localeTag, localizedName, readStoredLocale, text as t, writeStoredLocale } from "./i18n.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111&ui=v113&knowledge=v2";
+import { LANGUAGE_OPTIONS, localeTag, localizedName, readStoredLocale, text as t, writeStoredLocale } from "./i18n.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111&ui=v113&knowledge=v3";
 import { addStudentPlan, normalizePlannerState, parseStudentIdInput, readPlannerState, removeStudentPlan, setGiftBoxCount, setInventoryCount, setMainTargetStudent, setResourceAmount, writePlannerState } from "./planner-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
 import { confirmGiftReservations, migrateLegacyAutoPostedPackageContents, postPeriodicResource, releaseGiftReservations, reserveGiftAllocation, setEquivalentGiftPoolCount, setStockResourceCount, syncPurchasedPackagesToInventory, synthesizeGoldGift, undoPeriodicResource } from "./inventory-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
 import { applyInventoryImport, parseInventoryImport, serializeInventoryExport } from "./inventory-transfer.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
-import { prepareAllocation, renderPlannerStudentOptions, renderPlannerWorkspace, renderWorkbenchTabs, wirePlannerImageFallbacks } from "./planner-view.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111&knowledge=v2";
+import { prepareAllocation, renderPlannerStudentOptions, renderPlannerWorkspace, renderWorkbenchTabs, wirePlannerImageFallbacks } from "./planner-view.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111&knowledge=v3";
 import { refreshInventoryGiftRows, renderInventoryWorkspace, wireInventoryImageFallbacks } from "./inventory-view.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
 import { renderResourcesWorkspace } from "./resource-view.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
 import { renderPackagesWorkspace } from "./package-view.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
 import { renderBrandStudentOptions, renderStudentDetails, renderStudentList, wireImageFallbacks } from "./render.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
 import { buildAgentContext, applyPlanningProposal, canReuseConfiguredProxy, mergePlanningProposals, stagePlanningProposal, validatePlanningProposal } from "./agent-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
 import { renderAgentWorkspace } from "./agent-view.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111&ui=v113";
-import { renderKnowledgeWorkspace } from "./knowledge-view.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111&knowledge=v2";
+import { renderKnowledgeWorkspace } from "./knowledge-view.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111&knowledge=v3";
 import { getDefaultCnProgress, normalizeCnProgress } from "./release-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
-import { getWorkbenchChromeState, updateInventoryFilter } from "./workbench-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111&knowledge=v2";
+import { getWorkbenchChromeState, updateInventoryFilter } from "./workbench-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111&knowledge=v3";
 
 const elements = {
   loading: document.querySelector("#loading-state"),

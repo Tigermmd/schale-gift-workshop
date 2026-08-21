@@ -21,6 +21,13 @@ const data = { snapshots: { thresholds }, localization: {} };
 
 const zh = renderKnowledgeWorkspace({ data, locale: "zh_cn", localization: {} });
 assert.match(zh, /好感知识/);
+assert.match(zh, /好感速查/);
+assert.match(zh, /1→100级/);
+assert.match(zh, /99→100级/);
+assert.match(zh, /knowledge-quick-answers/);
+assert.match(zh, /data-knowledge-gift="normal"/);
+assert.match(zh, /data-knowledge-gift="premium"/);
+assert.match(zh, /金色礼物从中档开始/);
 assert.match(zh, /240(?:,)?225/);
 assert.match(zh, /7(?:,)?215/);
 assert.match(zh, /100级/);
@@ -33,7 +40,7 @@ assert.doesNotMatch(zh, /240225\.00/);
 for (const locale of ["en", "ja"]) {
   const html = renderKnowledgeWorkspace({ data, locale, localization: {} });
   assert.match(html, /240(?:,)?225/);
-  assert.match(html, /<details class="knowledge-level-details">/);
+  assert.match(html, /<details class="knowledge-level-details(?: knowledge-panel)?">/);
 }
 
 console.log("knowledge view tests passed");
