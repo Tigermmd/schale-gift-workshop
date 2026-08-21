@@ -103,6 +103,8 @@ const reservationHtml = renderInventoryWorkspace({
 });
 assert.match(reservationHtml, /测试礼物 ×1/);
 assert.doesNotMatch(reservationHtml, /礼物 5000/);
+assert.match(reservationHtml, /<details class="inventory-reservation-panel">/);
+assert.match(reservationHtml, /<summary>[\s\S]*1 种/);
 
 const emptyInventoryHtml = renderInventoryWorkspace({
   data: {

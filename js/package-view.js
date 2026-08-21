@@ -136,8 +136,9 @@ function packageRow({ row, item, locale, rank = null, data, student }) {
     <div class="package-efficiency-kpis" aria-label="${escapeHtml(t(locale, "packageDetails"))}">
       <div><span>${escapeHtml(t(locale, "packagePrice"))}</span><b>¥${formatInteger(row.price || 0, locale)}</b></div>
       <div><span>${escapeHtml(t(locale, "packageExpectedExp"))}</span><b>${formatExp(row.expectedExp, locale)}</b></div>
-      <div><span>${escapeHtml(t(locale, "packageAvailable"))}</span><b>${formatQuantity(available, locale)} / ${formatQuantity(limit, locale)}</b></div>
+      <div><span>${escapeHtml(t(locale, "packageAvailable"))}</span><b>${formatQuantity(available, locale)}</b></div>
       <div><span>${escapeHtml(t(locale, "packagePurchased"))}</span><b>${formatQuantity(purchased, locale)}</b></div>
+      <div><span>${escapeHtml(t(locale, "packageLimit"))}</span><b>${formatQuantity(limit, locale)}</b></div>
     </div>
     <details class="package-details"><summary>${escapeHtml(t(locale, "packageDetails"))}</summary><div class="package-contents">${contentsHtml(displayItem, locale, data)}</div><div class="package-efficiency-breakdown">${breakdownHtml(row, locale)}</div>
     ${packageNote(displayItem, locale) ? `<p class="package-catalog-note">${escapeHtml(packageNote(displayItem, locale))}</p>` : ""}

@@ -96,6 +96,7 @@ assert.doesNotMatch(html, /100000|100008|100009/);
 assert.match(html, /class="icon-frame resource-icon"/);
 assert.match(styles, /\.gift-box-inventory\s*\{/);
 assert.match(styles, /\.gift-box-input\s*\{/);
+assert.match(styles, /\.resource-reward-summary\s*\{[^}]*display:\s*grid/s, "Assault rewards must render as separate blocks");
 assert.equal((html.match(/data-resource-icon="schedule"/g) ?? []).length, 2, "Schedule and cafe relationship resources must share the schedule icon marker");
 assert.equal((html.match(/src="\.\/assets\/ui\/schedule-favor\.png"/g) ?? []).length, 2, "Schedule and cafe relationship resources must share the schedule icon asset");
 assert.doesNotMatch(html, /data-resource-icon="cafe"/);
@@ -215,6 +216,7 @@ const naturalConfirmedExplanationHtml = renderResourcesWorkspace({
   },
 });
 assert.match(naturalConfirmedExplanationHtml, /每月70个：商店兑换50个，爬塔奖励20个/);
+assert.doesNotMatch(naturalConfirmedExplanationHtml, /商店 50 \+ 制约解除决战 20/);
 assert.doesNotMatch(naturalConfirmedExplanationHtml, /商店50 \+ 爬塔20|盒子 ID|用户确认/);
 
 const unreleasedTargetResourceHtml = renderResourcesWorkspace({

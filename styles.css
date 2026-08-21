@@ -2154,7 +2154,10 @@ textarea::placeholder { color: #9aabba; }
   background: var(--cyan-soft);
 }
 .inventory-notice { margin-top: var(--space-4); padding: .7rem .85rem; border: 1px solid #b6e0e1; border-radius: var(--radius-md); font-size: .68rem; }
-.inventory-reservation-panel { display: grid; grid-template-columns: minmax(12rem, .8fr) minmax(0, 1.4fr) auto; align-items: center; gap: .8rem; }
+.inventory-reservation-panel { display: block; }
+.inventory-reservation-panel > summary { display: flex; align-items: center; justify-content: space-between; gap: .75rem; min-height: 2.4rem; color: var(--navy); font-size: .72rem; font-weight: 900; }
+.inventory-reservation-panel > summary b { color: var(--muted); font-size: .6rem; }
+.inventory-reservation-content { display: grid; grid-template-columns: minmax(12rem, .8fr) minmax(0, 1.4fr) auto; align-items: center; gap: .8rem; padding-top: .35rem; }
 .inventory-reservation-panel h2 { color: var(--navy); font-size: .82rem; }
 .inventory-reservation-panel p { margin-top: .25rem; color: var(--muted); font-size: .62rem; }
 .inventory-reservation-list { display: flex; flex-wrap: wrap; gap: .3rem; }
@@ -2202,6 +2205,10 @@ textarea::placeholder { color: #9aabba; }
 .resource-input label { display: grid; gap: .2rem; color: var(--muted); font-size: .58rem; }
 .resource-forecast { display: grid; gap: .12rem; justify-items: end; color: var(--muted); font-size: .6rem; text-align: right; }
 .resource-forecast strong { color: var(--blue-deep); font-size: .78rem; font-variant-numeric: tabular-nums; }
+.resource-reward-summary { display: grid; gap: .25rem; justify-items: end; }
+.resource-reward-summary strong,
+.resource-reward-summary span { display: block; }
+.resource-reward-summary span { padding: .18rem .32rem; border: 1px solid var(--line); border-radius: 6px; background: var(--soft); color: var(--blue-deep); font-size: .58rem; font-weight: 800; white-space: nowrap; }
 .resource-forecast-split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; width: 100%; }
 .resource-forecast-split > div { display: grid; gap: .08rem; }
 .resource-forecast-split small { white-space: nowrap; }
@@ -2518,7 +2525,7 @@ textarea::placeholder { color: #9aabba; }
   .inventory-periodic-list-head { display: none; }
   .inventory-periodic-row { grid-template-columns: 1fr; gap: .45rem; }
   .inventory-periodic-actions { justify-content: start; }
-  .inventory-reservation-panel { grid-template-columns: 1fr; }
+  .inventory-reservation-content { grid-template-columns: 1fr; }
   .inventory-reservation-actions { justify-content: start; }
   .inventory-transfer-panel,
   .inventory-transfer-primary { align-items: start; flex-direction: column; }
@@ -2532,6 +2539,7 @@ textarea::placeholder { color: #9aabba; }
   .resource-forecast,
   .resource-row-details { grid-column: auto; grid-row: auto; }
   .resource-forecast { justify-items: start; text-align: left; }
+  .resource-reward-summary { justify-items: start; }
   .resource-forecast-split { width: min(100%, 22rem); }
   .resource-target-summary { align-items: flex-start; flex-direction: column; }
   .resource-target-summary span { text-align: left; }

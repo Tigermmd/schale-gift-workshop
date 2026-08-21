@@ -162,7 +162,7 @@ function renderResourceForecast(resource, forecast, locale, previewDays, target)
 
 function resourceMeta(resource, locale) {
   if (resource.id === "monthly-synthesis-stones") {
-    return t(locale, resource.value_source === "user" ? "resourceSynthesisManualMeta" : "resourceSynthesisMeta");
+    return t(locale, resource.value_source === "user" ? "resourceSynthesisManualMeta" : "resourceSynthesisMeta", resource.amount);
   }
   return t(locale, "resourceCadence", resource.cadence);
 }
