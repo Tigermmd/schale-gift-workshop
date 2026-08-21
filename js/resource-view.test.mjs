@@ -217,4 +217,30 @@ const naturalConfirmedExplanationHtml = renderResourcesWorkspace({
 assert.match(naturalConfirmedExplanationHtml, /每月70个：商店兑换50个，爬塔奖励20个/);
 assert.doesNotMatch(naturalConfirmedExplanationHtml, /商店50 \+ 爬塔20|盒子 ID|用户确认/);
 
+const unreleasedTargetResourceHtml = renderResourcesWorkspace({
+  data: {
+    giftBoxes: [],
+    unlimitedAssaultRewards: null,
+    studentById: new Map([["10122", { student_id: 10122, name_zh_cn: "未花（泳装）" }]]),
+    releaseTimeline: [{ studentId: 10122, jpRank: 180 }],
+  },
+  state: {
+    mainTargetStudentId: 10122,
+    cnProgress: { cutoffRank: 100 },
+    periodDays: 60,
+    resourceForecastDays: 60,
+    students: [{ studentId: 10122 }],
+    giftBoxes: {},
+    resources: [{ id: "daily-schedule-exp", cadence: "daily", unit: "relationship_exp", input_kind: "daily_count", amount: 1, expected_per_count: 31.25 }, { id: "daily-cafe-exp", cadence: "daily", unit: "relationship_exp", input_kind: "daily_count", amount: 1, expected_per_count: 15 }],
+  },
+  locale: "zh_cn",
+  evidence: { sources: [], rows: [] },
+});
+assert.match(unreleasedTargetResourceHtml, /当前目标：未花（泳装）/);
+assert.match(unreleasedTargetResourceHtml, /未实装.*日程.*咖啡厅.*不计入/);
+assert.match(unreleasedTargetResourceHtml, /当前目标可计入好感/);
+assert.match(unreleasedTargetResourceHtml, /不计入当前目标/);
+assert.doesNotMatch(unreleasedTargetResourceHtml, /有效好感/);
+assert.doesNotMatch(unreleasedTargetResourceHtml, />1,387\.50</);
+
 console.log("resource view tests passed");

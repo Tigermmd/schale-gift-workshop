@@ -58,6 +58,27 @@ assert.match(periodicHtml, /\+3 金色礼物自选盒/);
 assert.doesNotMatch(periodicHtml, /输入数值/);
 assert.doesNotMatch(periodicHtml, /礼物盒 100008/);
 
+const unreleasedPeriodicHtml = renderPeriodicResources({
+  data: {
+    unlimitedAssaultRewards: null,
+    studentById: new Map([["10122", { student_id: 10122, name_zh_cn: "未花（泳装）" }]]),
+    releaseTimeline: [{ studentId: 10122, jpRank: 180 }],
+  },
+  state: {
+    mainTargetStudentId: 10122,
+    cnProgress: { cutoffRank: 100 },
+    resourceForecastDays: 30,
+    students: [{ studentId: 10122 }],
+    resources: [{ id: "daily-schedule-exp", cadence: "daily", unit: "relationship_exp", amount: 1, expected_per_count: 31.25 }, { id: "daily-cafe-exp", cadence: "daily", unit: "relationship_exp", amount: 1, expected_per_count: 15 }],
+    resourcePostingHistory: [],
+  },
+  locale: "zh_cn",
+});
+assert.match(unreleasedPeriodicHtml, /当前目标：未花（泳装）/);
+assert.match(unreleasedPeriodicHtml, /本期预计/);
+assert.match(unreleasedPeriodicHtml, /当前目标可计入/);
+assert.equal((unreleasedPeriodicHtml.match(/不计入当前目标/g) ?? []).length, 2, "schedule and cafe must be marked unavailable for an unreleased target");
+
 const reservationHtml = renderInventoryWorkspace({
   data: {
     gifts: [{ id: 5000, name_zh_cn: "测试礼物", name_en: "Test Gift", rarity: "SSR", base_exp: 60 }],
@@ -165,5 +186,34 @@ const expandedEmptyInventoryHtml = renderInventoryWorkspace({
 });
 assert.doesNotMatch(expandedEmptyInventoryHtml, /礼物数据已经加载/);
 assert.doesNotMatch(expandedEmptyInventoryHtml, /data-inventory-show-all/);
+
+const canonicalGiftBoxNameHtml = renderInventoryWorkspace({
+  data: {
+    gifts: [],
+    giftById: new Map(),
+    giftBoxes: [
+      { id: "100008", name_zh_cn: "礼物盒", name_en: "Gift box", name_ja: "ギフトボックス", pool: "choice", rarity: "SSR" },
+      { id: "100009", name_zh_cn: "高级礼物盒", name_en: "Premium gift box", name_ja: "高級ギフトボックス", pool: "random", rarity: "SR" },
+    ],
+  },
+  state: {
+    periodDays: 30,
+    students: [],
+    giftBoxes: { "100008": 1, "100009": 1 },
+    resources: [],
+    inventory: {},
+    giftReservations: {},
+    stockResources: { manufacturing_stone: 0, synthesis_stone_gold: 0 },
+    incomingResources: { stockResources: {}, giftBoxes: {}, equivalentGiftPools: {}, relationshipExp: {} },
+    equivalentGiftPools: {},
+    resourcePostingHistory: [],
+  },
+  locale: "zh_cn",
+  filters: { query: "", rarity: "all", exp: "all", onlyOwned: true },
+  evidence: { rows: [], sources: [] },
+});
+assert.match(canonicalGiftBoxNameHtml, /金色礼物自选盒/);
+assert.match(canonicalGiftBoxNameHtml, /紫色礼物随机盒/);
+assert.doesNotMatch(canonicalGiftBoxNameHtml, /<strong>礼物盒<\/strong>|<strong>高级礼物盒<\/strong>/);
 
 console.log("inventory view tests passed");

@@ -79,6 +79,31 @@ function resourcePreviewDays(state) {
   return Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 30;
 }
 
+function selectedResourceTarget({ data, state }) {
+  const targetId = state?.mainTargetStudentId ?? state?.students?.[0]?.studentId;
+  if (targetId === null || targetId === undefined || targetId === "") return null;
+  const student = data?.studentById?.get?.(String(targetId)) ?? null;
+  const release = calculateRelationshipSourceForecast({
+    state,
+    studentId: targetId,
+    cnProgress: state?.cnProgress,
+    timeline: data?.releaseTimeline ?? [],
+    periodDays: resourcePreviewDays(state),
+  });
+  return { student, release };
+}
+
+function renderResourceTargetSummary({ target, locale }) {
+  if (!target) {
+    return `<div class="resource-target-summary is-empty"><strong>${escapeHtml(t(locale, "resourceTargetTitle", t(locale, "resourceTargetNotSelected")))}</strong><span>${escapeHtml(t(locale, "resourceTargetChooseHint"))}</span></div>`;
+  }
+  const studentName = localizedName(target.student, "student", locale);
+  const statusText = target.release?.giftOnly
+    ? t(locale, "resourceTargetGiftOnly")
+    : t(locale, "resourceTargetReleased");
+  return `<div class="resource-target-summary ${target.release?.giftOnly ? "is-gift-only" : "is-released"}"><strong>${escapeHtml(t(locale, "resourceTargetTitle", studentName || t(locale, "unknown")))}</strong><span>${escapeHtml(statusText)}</span></div>`;
+}
+
 function renderResourceInput(resource, state, locale, lead) {
   const isConfigured = resource.amount !== null;
   if (resource.input_kind === "floor") {
@@ -122,9 +147,15 @@ function renderUnlimitedRewardSummary(summary, locale) {
   return `<div class="resource-reward-summary"><strong>${escapeHtml(t(locale, "resourceFloorSummary", summary.floor))}</strong>${rewards.map((reward) => `<span>${escapeHtml(reward)}</span>`).join("")}</div>`;
 }
 
-function renderResourceForecast(resource, forecast, locale, previewDays) {
+function renderResourceForecast(resource, forecast, locale, previewDays, target) {
   if (!forecast) return `<strong>${escapeHtml(t(locale, "resourceWaitingInput"))}</strong>`;
   if (forecast.kind === "unlimited_assault") return `${renderUnlimitedRewardSummary(forecast.summary, locale)}<small>${escapeHtml(t(locale, "resourceForecastLabel", resource.input_kind))} · ${escapeHtml(t(locale, "resourceForecastWindow", previewDays))}</small>`;
+  if (forecast.kind === "relationship_exp") {
+    const total = formatExp(forecast.value, locale);
+    const targetValue = !target ? "—" : target.release?.giftOnly ? formatExp(0, locale) : total;
+    const targetStatus = !target ? t(locale, "resourceTargetNotSelected") : target.release?.giftOnly ? t(locale, "resourceTargetExcluded") : t(locale, "resourceTargetReleased");
+    return `<div class="resource-forecast-split"><div><small>${escapeHtml(t(locale, "resourceTotalPreview"))}</small><strong>${escapeHtml(total)}</strong></div><div><small>${escapeHtml(t(locale, "resourceTargetPreview"))}</small><strong>${escapeHtml(targetValue)}</strong></div></div><small>${escapeHtml(targetStatus)} · ${escapeHtml(t(locale, "resourceForecastWindow", previewDays))}</small>`;
+  }
   const value = forecast.kind === "relationship_exp" ? formatExp(forecast.value, locale) : formatSmartQuantity(forecast.value, locale);
   return `<strong>${escapeHtml(value)}</strong><small>${escapeHtml(t(locale, "resourceForecastLabel", resource.input_kind))} · ${escapeHtml(t(locale, "resourceForecastWindow", previewDays))}</small>`;
 }
@@ -152,7 +183,7 @@ function resourceIcon(resource, data) {
   return source ? `<img src="${escapeHtml(source.local)}" data-resource-icon="${iconVariant}" data-fallback="${escapeHtml(source.remote ?? "")}" alt="" loading="lazy">` : (resource.cadence === "daily" ? "D" : resource.cadence === "weekly" ? "W" : "M");
 }
 
-function renderResourceRow({ resource, state, data, locale, evidenceById, sourceById }) {
+function renderResourceRow({ resource, state, data, locale, evidenceById, sourceById, target }) {
   const isConfigured = resource.amount !== null;
   const previewDays = resourcePreviewDays(state);
   const forecast = calculateResourceForecast(resource, resource.amount, previewDays, data.unlimitedAssaultRewards, { resources: state.resources });
@@ -166,7 +197,7 @@ function renderResourceRow({ resource, state, data, locale, evidenceById, source
     <div class="icon-frame resource-icon" aria-hidden="true">${resourceIcon(resource, data)}</div>
     <div class="resource-copy"><strong><span class="resource-name">${escapeHtml(t(locale, "resourceName", resource.id))}</span><em class="resource-status ${isConfigured ? "is-configured" : "is-missing"}">${escapeHtml(t(locale, isConfigured ? "resourceConfigured" : "resourceMissing"))}</em></strong><small>${escapeHtml(resourceMeta(resource, locale))}</small></div>
     ${renderResourceInput(resource, state, locale, lead)}
-    <div class="resource-forecast ${resource.input_kind === "floor" ? "is-reward-forecast" : ""}">${renderResourceForecast(resource, forecast, locale, previewDays)}</div>
+    <div class="resource-forecast ${resource.input_kind === "floor" ? "is-reward-forecast" : ""}">${renderResourceForecast(resource, forecast, locale, previewDays, target)}</div>
     <details class="resource-row-details"><summary aria-label="${escapeHtml(`${t(locale, "resourceName", resource.id)} · ${t(locale, "resourceEvidenceDetails")}`)}">${escapeHtml(t(locale, "resourceName", resource.id))} · ${escapeHtml(t(locale, "resourceEvidenceDetails"))}</summary>${detailsContent}</details>
   </article>`;
 }
@@ -227,6 +258,8 @@ function renderRelationshipSourceProjection({ data, state, locale, localization 
 }
 
 function giftBoxName(box, locale) {
+  const id = String(box?.id ?? "");
+  if (["100000", "100008", "100009"].includes(id)) return t(locale, "inventoryBoxName", id);
   if (locale === "en") return box?.name_en ?? box?.name_zh_cn ?? "";
   if (locale === "ja") return box?.name_ja ?? box?.name_en ?? box?.name_zh_cn ?? "";
   return box?.name_zh_cn ?? box?.name_en ?? "";
@@ -279,23 +312,21 @@ function renderGiftBoxWorkspace({ data, state, locale, localization }) {
 
 export function renderResourcesWorkspace({ data = {}, state, locale, localization, evidence, openResourceId = null }) {
   const previewDays = resourcePreviewDays(state);
+  const target = selectedResourceTarget({ data, state });
   const resourcesCaption = t(locale, "resourcesCaption");
   const evidenceById = new Map((evidence?.rows ?? []).map((row) => [row.resource_id, row]));
   const sourceById = new Map((evidence?.sources ?? []).map((source) => [source.id, source]));
   const configured = state.resources.filter((resource) => resource.amount !== null);
   const missing = state.resources.filter((resource) => resource.amount === null);
   const shouldKeepConfiguredOpen = Boolean(openResourceId && configured.some((resource) => resource.id === openResourceId));
-  const projected = state.resources.reduce((sum, resource) => {
-    const forecast = calculateResourceForecast(resource, resource.amount, previewDays, data.unlimitedAssaultRewards, { resources: state.resources });
-    if (forecast?.kind !== "relationship_exp") return sum;
-    return sum + forecast.value;
-  }, 0);
+  const projected = target?.release?.totalExp ?? 0;
   return `<section class="resource-workspace panel" aria-labelledby="resource-title">
     <div class="section-heading"><div class="resource-heading-copy"><h2 id="resource-title">${t(locale, "resourcesTitle")}</h2>${resourcesCaption ? `<p class="section-caption">${escapeHtml(resourcesCaption)}</p>` : ""}</div></div>
     <div class="resource-toolbar"><label><span>${t(locale, "resourcePreviewDays")}</span><input type="number" min="0" max="366" step="1" data-resource-period-days value="${previewDays}"></label><a class="template-link" href="./relationship_data/cn_planner_data_to_fill.md" target="_blank" rel="noreferrer">${t(locale, "fillDataTemplate")}</a></div>
-    <div class="resource-kpi-grid"><article><span>${t(locale, "resourceConfigured")}</span><strong>${configured.length}/${state.resources.length}</strong></article><article><span>${t(locale, "effectiveExp")}</span><strong>${formatExp(projected, locale)}</strong></article><article><span>${t(locale, "resourceMissing")}</span><strong>${state.resources.length - configured.length}</strong></article></div>
-    ${missing.length ? `<section class="resource-missing-panel" aria-labelledby="resource-missing-title"><div class="resource-missing-heading"><div><span class="resource-missing-kicker">${escapeHtml(t(locale, "resourceMissing"))}</span><h2 id="resource-missing-title">${escapeHtml(t(locale, "resourceMissingTitle"))}</h2></div><span>${missing.length}</span></div><div class="resource-list">${missing.map((resource) => renderResourceRow({ resource, state, data, locale, evidenceById, sourceById })).join("")}</div></section>` : ""}
-    ${configured.length ? `<details class="resource-details"${shouldKeepConfiguredOpen ? " open" : ""}><summary>${escapeHtml(t(locale, "resourceInputDetails"))} · ${configured.length}</summary><div class="resource-list">${configured.map((resource) => renderResourceRow({ resource, state, data, locale, evidenceById, sourceById })).join("")}</div></details>` : ""}
+    ${renderResourceTargetSummary({ target, locale })}
+    <div class="resource-kpi-grid"><article><span>${t(locale, "resourceConfigured")}</span><strong>${configured.length}/${state.resources.length}</strong></article><article><span>${t(locale, "resourceTargetExp")}</span><strong>${formatExp(projected, locale)}</strong></article><article><span>${t(locale, "resourceMissing")}</span><strong>${state.resources.length - configured.length}</strong></article></div>
+    ${missing.length ? `<section class="resource-missing-panel" aria-labelledby="resource-missing-title"><div class="resource-missing-heading"><div><span class="resource-missing-kicker">${escapeHtml(t(locale, "resourceMissing"))}</span><h2 id="resource-missing-title">${escapeHtml(t(locale, "resourceMissingTitle"))}</h2></div><span>${missing.length}</span></div><div class="resource-list">${missing.map((resource) => renderResourceRow({ resource, state, data, locale, evidenceById, sourceById, target })).join("")}</div></section>` : ""}
+    ${configured.length ? `<details class="resource-details"${shouldKeepConfiguredOpen ? " open" : ""}><summary>${escapeHtml(t(locale, "resourceInputDetails"))} · ${configured.length}</summary><div class="resource-list">${configured.map((resource) => renderResourceRow({ resource, state, data, locale, evidenceById, sourceById, target })).join("")}</div></details>` : ""}
     <details class="resource-details"><summary>${escapeHtml(t(locale, "resourceProjectionDetails"))}</summary>${renderManufacturingProjection({ data, state, locale, localization })}${renderRelationshipSourceProjection({ data, state, locale, localization })}${renderGiftBoxWorkspace({ data, state, locale, localization })}</details>
   </section>`;
 }

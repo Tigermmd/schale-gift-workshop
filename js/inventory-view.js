@@ -2,6 +2,7 @@ import { calculateGiftBoxExpectedExp } from "./gift-box-state.js?v=dashboard-202
 import { calculateInventorySummary, mapPeriodicResource } from "./inventory-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
 import { localizedName, text as t } from "./i18n.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
 import { formatExp, formatInteger, formatSmartQuantity } from "./render.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
+import { calculateRelationshipSourceForecast } from "./release-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -26,6 +27,8 @@ function itemImage(itemId, manifest, className = "inventory-item-image") {
 }
 
 function boxName(box, locale) {
+  const id = String(box?.id ?? "");
+  if (["100000", "100008", "100009"].includes(id)) return t(locale, "inventoryBoxName", id);
   if (locale === "en") return box?.name_en ?? box?.name_zh_cn ?? "";
   if (locale === "ja") return box?.name_ja ?? box?.name_en ?? box?.name_zh_cn ?? "";
   return box?.name_zh_cn ?? box?.name_en ?? "";
@@ -95,14 +98,39 @@ function periodicInputText(resource, locale) {
   return t(locale, "inventoryPeriodicBase", formatSmartQuantity(resource.amount, locale));
 }
 
+function periodicTarget({ data, state }) {
+  const target = firstTargetStudent(data, state);
+  if (!target) return null;
+  const release = calculateRelationshipSourceForecast({
+    state,
+    studentId: target.student_id,
+    cnProgress: state?.cnProgress,
+    timeline: data?.releaseTimeline ?? [],
+    periodDays: Number(state?.resourceForecastDays ?? state?.periodDays ?? 30),
+  });
+  return { student: target, release };
+}
+
+function periodicTargetPreview(mapped, resource, target, locale) {
+  if (resource?.unit !== "relationship_exp") return mappedPreview(mapped, locale);
+  if (!target) return `<span>${escapeHtml(t(locale, "resourceTargetNotSelected"))}</span>`;
+  if (target.release?.giftOnly) return `<span>${escapeHtml(t(locale, "resourceTargetExcluded"))}</span>`;
+  return mappedPreview(mapped, locale);
+}
+
 export function renderPeriodicResources({ data, state, locale }) {
   const rewardSnapshot = data.unlimitedAssaultRewards;
   const previewDays = Number.isFinite(Number(state.resourceForecastDays)) ? Math.max(0, Math.floor(Number(state.resourceForecastDays))) : Number(state.periodDays ?? 30);
-  return `<section class="inventory-section" aria-labelledby="inventory-periodic-title"><div class="section-heading compact"><h2 id="inventory-periodic-title">${escapeHtml(t(locale, "inventoryPeriodicTitle"))}</h2><span class="inventory-periodic-period">${escapeHtml(t(locale, "inventoryPeriodicPeriod", previewDays))}</span></div><details class="inventory-details"><summary>${escapeHtml(t(locale, "inventoryShowPeriodic"))} · ${formatSmartQuantity(state.resources.length, locale)}</summary><div class="inventory-periodic-list"><div class="inventory-periodic-list-head"><span>${escapeHtml(t(locale, "inventoryPeriodicResource"))}</span><span>${escapeHtml(t(locale, "inventoryPeriodicPreview"))}</span><span class="sr-only">${escapeHtml(t(locale, "inventoryPeriodicActions"))}</span></div>${state.resources.map((resource) => {
+  const target = periodicTarget({ data, state });
+  const targetName = target ? localizedName(target.student, "student", locale) : t(locale, "resourceTargetNotSelected");
+  const targetSummary = target
+    ? t(locale, target.release?.giftOnly ? "resourceTargetGiftOnly" : "resourceTargetReleased")
+    : t(locale, "resourceTargetChooseHint");
+  return `<section class="inventory-section" aria-labelledby="inventory-periodic-title"><div class="section-heading compact"><div><h2 id="inventory-periodic-title">${escapeHtml(t(locale, "inventoryPeriodicTitle"))}</h2><span class="inventory-section-caption">${escapeHtml(t(locale, "resourceTargetTitle", targetName))} · ${escapeHtml(targetSummary)}</span></div><span class="inventory-periodic-period">${escapeHtml(t(locale, "inventoryPeriodicPeriod", previewDays))}</span></div><details class="inventory-details"><summary>${escapeHtml(t(locale, "inventoryShowPeriodic"))} · ${formatSmartQuantity(state.resources.length, locale)}</summary><div class="inventory-periodic-list"><div class="inventory-periodic-list-head"><span>${escapeHtml(t(locale, "inventoryPeriodicResource"))}</span><span>${escapeHtml(t(locale, "inventoryPeriodicPreview"))}</span><span>${escapeHtml(t(locale, "inventoryPeriodicTargetPreview"))}</span><span class="sr-only">${escapeHtml(t(locale, "inventoryPeriodicActions"))}</span></div>${state.resources.map((resource) => {
     const mapped = mapPeriodicResource(resource, { periodDays: previewDays, rewardSnapshot, resources: state.resources });
     const postingKey = `${resource.id}:${previewDays}`;
     const active = state.resourcePostingHistory.find((item) => item.active !== false && item.postingKey === postingKey);
-    return `<article class="inventory-periodic-row ${active ? "is-posted" : ""}"><div class="inventory-periodic-copy"><div class="inventory-periodic-title"><strong>${escapeHtml(t(locale, "inventoryPeriodicName", resource.id))}</strong><span>${escapeHtml(t(locale, "resourceCadence", resource.cadence))}</span></div><small>${escapeHtml(periodicInputText(resource, locale))}</small></div><div class="inventory-periodic-preview">${mappedPreview(mapped, locale)}</div><div class="inventory-periodic-actions">${active ? `<span class="inventory-posted-badge">${escapeHtml(t(locale, "inventoryPosted"))}</span><button type="button" class="text-button" data-undo-posting="${escapeHtml(active.id)}">${escapeHtml(t(locale, "inventoryUndoPost"))}</button>` : `<button type="button" class="secondary-button" data-post-resource="${escapeHtml(resource.id)}" ${mapped ? "" : "disabled"}>${escapeHtml(t(locale, "inventoryPostResource"))}</button>`}</div></article>`;
+    return `<article class="inventory-periodic-row ${active ? "is-posted" : ""}"><div class="inventory-periodic-copy"><div class="inventory-periodic-title"><strong>${escapeHtml(t(locale, "inventoryPeriodicName", resource.id))}</strong><span>${escapeHtml(t(locale, "resourceCadence", resource.cadence))}</span></div><small>${escapeHtml(periodicInputText(resource, locale))}</small></div><div class="inventory-periodic-preview">${mappedPreview(mapped, locale)}</div><div class="inventory-periodic-preview inventory-periodic-target-preview">${periodicTargetPreview(mapped, resource, target, locale)}</div><div class="inventory-periodic-actions">${active ? `<span class="inventory-posted-badge">${escapeHtml(t(locale, "inventoryPosted"))}</span><button type="button" class="text-button" data-undo-posting="${escapeHtml(active.id)}">${escapeHtml(t(locale, "inventoryUndoPost"))}</button>` : `<button type="button" class="secondary-button" data-post-resource="${escapeHtml(resource.id)}" ${mapped ? "" : "disabled"}>${escapeHtml(t(locale, "inventoryPostResource"))}</button>`}</div></article>`;
   }).join("")}</div></details></section>`;
 }
 
