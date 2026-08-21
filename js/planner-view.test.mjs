@@ -149,4 +149,28 @@ assert.match(iconPlannerHtml, /class="planner-detail-section planner-stock-detai
 assert.match(iconPlannerHtml, /class="planner-detail-section planner-periodic-detail"/, "Planner details must include a dedicated periodic-resource breakdown");
 assert.match(iconPlannerHtml, /本期手动计入|Manually added|今期手動追加/, "Planner details must distinguish one-time and cadence-based resources");
 
+const noValidGoalHtml = renderPlannerWorkspace({
+  data: {
+    snapshots: { thresholds: [] },
+    studentById: new Map([["10122", iconPlannerStudent]]),
+    plannerStudents: [iconPlannerStudent],
+    students: [iconPlannerStudent],
+    gifts: [],
+    giftById: new Map(),
+    giftBoxes: [],
+    craftingById: new Map(),
+    releaseTimeline: [],
+  },
+  state: {
+    ...createEmptyPlannerState(),
+    students: [{ id: "plan-10122", studentId: 10122, currentLevel: 1, currentProgress: 0, targetLevel: 1 }],
+    mainTargetStudentId: 10122,
+  },
+  locale: "zh_cn",
+  localization: {},
+});
+assert.match(noValidGoalHtml, /<details class="planner-edit-details[^"]*"[^>]*open>/, "A 1-to-1 placeholder plan must expose the first setup step");
+assert.match(noValidGoalHtml, /<summary>添加规划目标<\/summary>/, "The first setup step must be named as adding a planning goal");
+assert.match(noValidGoalHtml, /当前礼物可贡献好感（期望）/);
+
 console.log("planner view tests passed");

@@ -168,6 +168,7 @@ export function renderPlannerWorkspace({ data, state, locale, localization, noti
   const mainPlan = state.students?.find((plan) => String(plan.studentId) === String(state.mainTargetStudentId)) ?? state.students?.[0] ?? null;
   const editingPlan = mainPlan;
   const mainStudent = mainPlan ? data.studentById.get(String(mainPlan.studentId)) : null;
+  const hasValidGoal = state.students?.some((plan) => Number(plan.targetLevel) > Number(plan.currentLevel) || Number(plan.currentProgress) > 0);
   const summary = calculatePlanningSummary({ state, targets: state.students, mainTargetId: state.mainTargetStudentId, forecastDays: state.forecastDays, data });
   const { allocation } = prepareAllocation(data, state, thresholds, summary);
   const hasAllocation = allocation.assignments.length > 0 || (allocation.synthesisGiftIds?.length ?? 0) > 0;
@@ -175,7 +176,7 @@ export function renderPlannerWorkspace({ data, state, locale, localization, noti
   const allocationWarning = allocation.searchTruncated ? `<p class="planner-result-warning">${escapeHtml(t(locale, "planningAllocationApproximate"))}</p>` : "";
   const summaryByStudent = new Map(summary.students.map((item) => [String(item.studentId), item]));
   const orderedPlans = [...state.students].sort((left, right) => Number(left.studentId) === Number(state.mainTargetStudentId) ? -1 : Number(right.studentId) === Number(state.mainTargetStudentId) ? 1 : 0);
-  const plannerForm = `<details class="planner-edit-details ${state.students.length ? "" : "planner-empty-form"}"><summary>${escapeHtml(t(locale, state.students.length ? "planningEdit" : "planningAddGoal"))}</summary><form class="planner-student-form" id="planner-student-form">
+  const plannerForm = `<details class="planner-edit-details ${state.students.length ? "" : "planner-empty-form"}"${hasValidGoal ? "" : " open"}><summary>${escapeHtml(t(locale, hasValidGoal ? "planningEdit" : "planningAddGoal"))}</summary><form class="planner-student-form" id="planner-student-form">
       ${studentPicker(data, state, locale, localization, state.students?.[0] ?? null)}
       <label><span>${t(locale, "currentLevel")}</span><input name="currentLevel" type="number" min="1" max="100" step="1" value="${editingPlan?.currentLevel ?? 1}" required></label>
       <label><span>${t(locale, "currentProgress")}</span><input name="currentProgress" type="number" min="0" step="1" value="${editingPlan?.currentProgress ?? 0}" required></label>
