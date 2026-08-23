@@ -1,7 +1,7 @@
-import { FUTURE_STUDENTS, LIMITED_OR_FES_STUDENT_TYPES } from "./future-students.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
-import { buildReleaseTimeline } from "./release-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
+import { FUTURE_STUDENTS, LIMITED_OR_FES_STUDENT_TYPES } from "./future-students.js?v=dashboard-20260824-synthesis-accounting-v112";
+import { buildReleaseTimeline } from "./release-state.js?v=dashboard-20260824-synthesis-accounting-v112";
 
-import { getCnGiftPackageCatalog } from "./package-catalog.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
+import { getCnGiftPackageCatalog } from "./package-catalog.js?v=dashboard-20260824-synthesis-accounting-v112";
 
 const DATA_ROOT = "./relationship_data";
 
@@ -48,16 +48,16 @@ export function buildStudentCatalog(students = [], overrides = FUTURE_STUDENTS) 
 }
 
 export const DATA_PATHS = Object.freeze({
-  gifts: `${DATA_ROOT}/gifts.json?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111`,
-  preferences: `${DATA_ROOT}/student_gift_preferences.json?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111`,
-  crafting: `${DATA_ROOT}/crafting_expected_relationship.json?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111`,
-  thresholds: `${DATA_ROOT}/relationship_thresholds.json?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111`,
-  packages: `${DATA_ROOT}/paid_packages_cn.json?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111`,
-  giftBoxes: `${DATA_ROOT}/gift_boxes_cn.json?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111`,
-  unlimitedAssaultRewards: `${DATA_ROOT}/unlimited_assault_rewards_cn.json?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111`,
-  resourceEvidence: `${DATA_ROOT}/resource_evidence_cn.json?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111`,
-  localization: `${DATA_ROOT}/localization.json?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111`,
-  releaseTimeline: `${DATA_ROOT}/jp_release_timeline.json?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111`,
+  gifts: `${DATA_ROOT}/gifts.json?v=dashboard-20260824-synthesis-accounting-v112`,
+  preferences: `${DATA_ROOT}/student_gift_preferences.json?v=dashboard-20260824-synthesis-accounting-v112`,
+  crafting: `${DATA_ROOT}/crafting_expected_relationship.json?v=dashboard-20260824-synthesis-accounting-v112`,
+  thresholds: `${DATA_ROOT}/relationship_thresholds.json?v=dashboard-20260824-synthesis-accounting-v112`,
+  packages: `${DATA_ROOT}/paid_packages_cn.json?v=dashboard-20260824-synthesis-accounting-v112`,
+  giftBoxes: `${DATA_ROOT}/gift_boxes_cn.json?v=dashboard-20260824-synthesis-accounting-v112`,
+  unlimitedAssaultRewards: `${DATA_ROOT}/unlimited_assault_rewards_cn.json?v=dashboard-20260824-synthesis-accounting-v112`,
+  resourceEvidence: `${DATA_ROOT}/resource_evidence_cn.json?v=dashboard-20260824-synthesis-accounting-v112`,
+  localization: `${DATA_ROOT}/localization.json?v=dashboard-20260824-synthesis-accounting-v112`,
+  releaseTimeline: `${DATA_ROOT}/jp_release_timeline.json?v=dashboard-20260824-synthesis-accounting-v112`,
 });
 
 async function fetchJson(path) {
@@ -89,7 +89,7 @@ export async function loadDashboardData() {
     fetchJson(DATA_PATHS.resourceEvidence),
     fetchJson(DATA_PATHS.localization),
     fetchJson(DATA_PATHS.releaseTimeline),
-    fetchOptionalJson("./assets/manifest.json?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111"),
+    fetchOptionalJson("./assets/manifest.json?v=dashboard-20260824-synthesis-accounting-v112"),
   ]);
 
   const gifts = giftSnapshot.gifts;

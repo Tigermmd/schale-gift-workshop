@@ -1,4 +1,4 @@
-import { createInventoryState } from "./inventory-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
+import { createInventoryState } from "./inventory-state.js?v=dashboard-20260824-synthesis-accounting-v112";
 
 export const INVENTORY_TRANSFER_FORMAT = "schale-relationship-inventory";
 export const INVENTORY_TRANSFER_SCHEMA_VERSION = 1;

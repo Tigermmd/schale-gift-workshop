@@ -1,6 +1,6 @@
-import { calculateGiftBoxExpectedExp } from "./gift-box-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
-import { calculateRequiredRelationshipExp } from "./planner-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
-import { calculatePeriodicResourceAmount, calculateSynthesisStoneSourceForecast, summarizeUnlimitedAssaultRewards } from "./resource-model.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
+import { calculateGiftBoxExpectedExp } from "./gift-box-state.js?v=dashboard-20260824-synthesis-accounting-v112";
+import { calculateRequiredRelationshipExp } from "./planner-state.js?v=dashboard-20260824-synthesis-accounting-v112";
+import { calculatePeriodicResourceAmount, calculateSynthesisStoneSourceForecast, summarizeUnlimitedAssaultRewards } from "./resource-model.js?v=dashboard-20260824-synthesis-accounting-v112";
 
 function numberOr(value, fallback = 0) {
   const number = Number(value);
@@ -144,12 +144,35 @@ export function calculateGiftOnlyForecast(state, { periodDays = 60, rewardSnapsh
     if (resource.gift_box_id === "100009") forecast.randomPurpleBoxes += amount;
   }
   if (managedSynthesisSources) {
-    forecast.synthesisStones = calculateSynthesisStoneSourceForecast(
+    const synthesisForecast = calculateSynthesisStoneSourceForecast(
       state?.resources ?? [],
       periodDays,
       rewardSnapshot,
-      { isResourcePosted: isPostedResource },
-    ).total;
+    );
+    const managedIds = new Set([
+      "monthly-synthesis-stones",
+      "monthly-unlimited-assault-gift-boxes",
+    ]);
+    const activePostings = (state?.resourcePostingHistory ?? []).filter((item) => item.active !== false
+      && managedIds.has(item.resourceId)
+      && Number(item.periodDays) === Number(periodDays));
+    const postingsHaveMappedAmounts = activePostings.length > 0 && activePostings.every((item) => Number.isFinite(
+      Number(item?.mapped?.stockResources?.synthesis_stone_gold),
+    ));
+    if (!excludePostedResources && postingsHaveMappedAmounts) {
+      const postedAmount = activePostings.reduce(
+        (sum, item) => sum + numberOr(item.mapped.stockResources.synthesis_stone_gold),
+        0,
+      );
+      forecast.synthesisStones = Math.max(0, synthesisForecast.total - postedAmount);
+    } else {
+      forecast.synthesisStones = calculateSynthesisStoneSourceForecast(
+        state?.resources ?? [],
+        periodDays,
+        rewardSnapshot,
+        { isResourcePosted: isPostedResource },
+      ).total;
+    }
   }
   return forecast;
 }

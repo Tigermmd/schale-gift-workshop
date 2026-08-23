@@ -74,9 +74,32 @@ const postedMonthlySynthesisForecast = calculateGiftOnlyForecast({
     { id: "monthly-synthesis-stones", cadence: "monthly", amount: 70, value_source: "default", unit: "synthesis_stone_gold" },
     { id: "monthly-unlimited-assault-gift-boxes", cadence: "monthly", amount: 99, input_kind: "floor", unit: "gift_box" },
   ],
-  resourcePostingHistory: [{ id: "monthly-post", resourceId: "monthly-synthesis-stones", postingKey: "monthly-synthesis-stones:60", periodDays: 60, active: true }],
+  resourcePostingHistory: [{
+    id: "monthly-post",
+    resourceId: "monthly-synthesis-stones",
+    postingKey: "monthly-synthesis-stones:60",
+    periodDays: 60,
+    mapped: { stockResources: { synthesis_stone_gold: 100 } },
+    active: true,
+  }],
 }, { periodDays: 60, rewardSnapshot: JSON.parse(fs.readFileSync(new URL("../relationship_data/unlimited_assault_rewards_cn.json", import.meta.url), "utf8")) });
 assert.equal(postedMonthlySynthesisForecast.synthesisStones, 40, "after posting the shop source, the forecast must retain only two months of tower stones");
+
+const combinedSynthesisPostingBeforeTowerConfiguration = calculateGiftOnlyForecast({
+  resources: [
+    { id: "monthly-synthesis-stones", cadence: "monthly", amount: 70, value_source: "default", unit: "synthesis_stone_gold" },
+    { id: "monthly-unlimited-assault-gift-boxes", cadence: "monthly", amount: 99, input_kind: "floor", unit: "gift_box" },
+  ],
+  resourcePostingHistory: [{
+    id: "monthly-post-before-tower",
+    resourceId: "monthly-synthesis-stones",
+    postingKey: "monthly-synthesis-stones:60",
+    periodDays: 60,
+    mapped: { stockResources: { synthesis_stone_gold: 140 } },
+    active: true,
+  }],
+}, { periodDays: 60, rewardSnapshot: JSON.parse(fs.readFileSync(new URL("../relationship_data/unlimited_assault_rewards_cn.json", import.meta.url), "utf8")) });
+assert.equal(combinedSynthesisPostingBeforeTowerConfiguration.synthesisStones, 0, "a previously posted combined 70/month baseline must cover the total after the tower floor is configured");
 
 const specialPackage = {
   id: "special",

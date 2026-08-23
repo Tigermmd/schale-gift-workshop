@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const dashboardRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const jsRoot = path.join(dashboardRoot, "js");
-const BUILD_VERSION = "dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
+const BUILD_VERSION = "dashboard-20260824-synthesis-accounting-v112";
 
 function assertVersionedUrl(specifier, sourceFile) {
   const url = new URL(specifier, "https://dashboard.invalid/");

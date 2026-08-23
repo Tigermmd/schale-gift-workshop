@@ -1,7 +1,11 @@
-import { calculatePeriodicResourceAmount, calculateSynthesisStoneSourceForecast, summarizeUnlimitedAssaultRewards } from "./resource-model.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
-import { normalizePlannerState } from "./planner-state.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
+import { calculatePeriodicResourceAmount, calculateSynthesisStoneSourceForecast, summarizeUnlimitedAssaultRewards } from "./resource-model.js?v=dashboard-20260824-synthesis-accounting-v112";
+import { normalizePlannerState } from "./planner-state.js?v=dashboard-20260824-synthesis-accounting-v112";
 
 const STOCK_RESOURCE_IDS = ["manufacturing_stone", "synthesis_stone_gold"];
+const MANAGED_SYNTHESIS_RESOURCE_IDS = new Set([
+  "monthly-synthesis-stones",
+  "monthly-unlimited-assault-gift-boxes",
+]);
 // In SchaleDB's gift catalog SR is the gold-gift tier; SSR is purple.
 const GOLD_RARITY = "SR";
 
@@ -154,6 +158,31 @@ function adjustIncoming(state, mapped, sign) {
   return next;
 }
 
+function recalculateManagedSynthesisPostings(state, { periodDays, rewardSnapshot }) {
+  const activeEntries = state.resourcePostingHistory.filter((item) => item.active !== false
+    && MANAGED_SYNTHESIS_RESOURCE_IDS.has(item.resourceId)
+    && Number(item.periodDays) === Number(periodDays));
+  let prepared = state;
+  for (const entry of activeEntries) {
+    const resource = prepared.resources.find((item) => item.id === entry.resourceId);
+    const mapped = mapPeriodicResource(resource, {
+      periodDays,
+      rewardSnapshot,
+      resources: prepared.resources,
+    });
+    if (!mapped) continue;
+    prepared = adjustIncoming(prepared, entry.mapped, -1);
+    prepared = adjustIncoming(prepared, mapped, 1);
+    prepared = {
+      ...prepared,
+      resourcePostingHistory: prepared.resourcePostingHistory.map((item) => item.id === entry.id
+        ? { ...item, mapped }
+        : item),
+    };
+  }
+  return prepared;
+}
+
 export function postPeriodicResource(state, resourceId, options = {}) {
   const next = createInventoryState(state);
   const resource = next.resources.find((item) => item.id === String(resourceId));
@@ -176,6 +205,12 @@ export function postPeriodicResource(state, resourceId, options = {}) {
         ? { ...item, active: false, replacedAt: timestamp }
         : item),
     };
+  }
+  if (MANAGED_SYNTHESIS_RESOURCE_IDS.has(String(resourceId))) {
+    prepared = recalculateManagedSynthesisPostings(prepared, {
+      periodDays,
+      rewardSnapshot: options.rewardSnapshot,
+    });
   }
   if (prepared.resourcePostingHistory.some((item) => item.active !== false && item.postingKey === key)) return prepared;
   const previousCount = prepared.resourcePostingHistory.filter((item) => item.postingKey?.startsWith(`${key}:`)).length;

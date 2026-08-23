@@ -17,7 +17,7 @@ import {
   syncPurchasedPackagesToInventory,
   undoPeriodicResource,
 } from "./inventory-state.js";
-import { createEmptyPlannerState, setInventoryCount } from "./planner-state.js";
+import { createEmptyPlannerState, setInventoryCount, setResourceAmount } from "./planner-state.js";
 
 const empty = createInventoryState();
 assert.deepEqual(empty.stockResources, {
@@ -86,6 +86,35 @@ const managedPosted = postPeriodicResource(
 );
 const managedPostedBoth = postPeriodicResource(managedPosted, "monthly-unlimited-assault-gift-boxes", { periodDays: 30, rewardSnapshot });
 assert.equal(managedPostedBoth.incomingResources.stockResources.synthesis_stone_gold, 70, "posting both sources must total 50 shop + 20 tower, not 90");
+const combinedMonthlyPosting = postPeriodicResource(
+  createInventoryState({
+    resources: [
+      managedSynthesisResources[0],
+      { ...managedSynthesisResources[1], amount: null },
+    ],
+    periodDays: 60,
+  }),
+  "monthly-synthesis-stones",
+  { periodDays: 60, rewardSnapshot },
+);
+assert.equal(combinedMonthlyPosting.incomingResources.stockResources.synthesis_stone_gold, 140, "before a tower floor is configured, the monthly row posts the combined 70/month baseline");
+const configuredAfterPosting = setResourceAmount(combinedMonthlyPosting, "monthly-unlimited-assault-gift-boxes", 99);
+const postedTowerAfterCombinedMonthly = postPeriodicResource(
+  configuredAfterPosting,
+  "monthly-unlimited-assault-gift-boxes",
+  { periodDays: 60, rewardSnapshot },
+);
+assert.equal(postedTowerAfterCombinedMonthly.incomingResources.stockResources.synthesis_stone_gold, 140, "configuring and posting the tower later must not add its stones twice");
+assert.equal(
+  postedTowerAfterCombinedMonthly.resourcePostingHistory.find((item) => item.resourceId === "monthly-synthesis-stones" && item.active !== false).mapped.stockResources.synthesis_stone_gold,
+  100,
+  "posting the tower later must recalculate the existing monthly posting as the shop-only contribution",
+);
+assert.equal(
+  postedTowerAfterCombinedMonthly.resourcePostingHistory.find((item) => item.resourceId === "monthly-unlimited-assault-gift-boxes" && item.active !== false).mapped.stockResources.synthesis_stone_gold,
+  40,
+  "the tower posting must retain only its own contribution",
+);
 const undone = undoPeriodicResource(postedGrandPurple, postedGrandPurple.resourcePostingHistory[0].id);
 assert.equal(undone.incomingResources.stockResources.manufacturing_stone, 0);
 assert.equal(undone.resourcePostingHistory.find((item) => item.resourceId === "weekly-manufacturing-stones").active, false);

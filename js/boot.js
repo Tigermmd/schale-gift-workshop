@@ -2,7 +2,7 @@
    local JSON snapshots used by the module graph, so explain the launch path
    instead of leaving the loading screen spinning forever. */
 (function startSchaleDashboard() {
-  const BUILD_VERSION = "dashboard-20260819-schale-alchemy-workshop-agent-chat-v111";
+  const BUILD_VERSION = "dashboard-20260824-synthesis-accounting-v112";
 
   function showBootError(title, message) {
     const loading = document.getElementById("loading-state");

@@ -1,4 +1,4 @@
-import { localeTag, localizedName, text as t } from "./i18n.js?v=dashboard-20260819-schale-alchemy-workshop-agent-chat-v111&ui=v113";
+import { localeTag, localizedName, text as t } from "./i18n.js?v=dashboard-20260824-synthesis-accounting-v112&ui=v113";
 
 function escapeHtml(value) {
   return String(value ?? "")
