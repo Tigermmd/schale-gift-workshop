@@ -157,10 +157,6 @@ generate_dashboard_assets.py       生成本地图片清单
 
 欢迎提交问题、国服数据修正和功能改进。涉及数据时，请附上服务器、版本、来源链接或游戏内截图。
 
-## 项目署名
-
-本项目全部由 GPT-5.6 Luna 开发，项目署名为 Codex（GPT-5.6 Luna）。
-
 ## 开源协议和第三方内容
 
 本项目自行编写的 HTML、CSS、JavaScript、Python、测试代码和文档代码采用 [MIT License](LICENSE) 发布。
