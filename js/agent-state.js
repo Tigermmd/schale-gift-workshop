@@ -1,8 +1,8 @@
-import { addStudentPlan, normalizePlannerState, removeStudentPlan, setMainTargetStudent } from "./planner-state.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { calculateRelationshipSourceForecast, getEligibleRelationshipSources, getStudentReleaseStatus, normalizeCnProgress } from "./release-state.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { calculateGiftOnlyForecast } from "./gift-only-planner.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { calculatePackageEfficiency, calculatePlanningSummary } from "./planning-summary.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { text as t } from "./i18n.js?v=dashboard-20260824-synthesis-accounting-v112";
+import { addStudentPlan, normalizePlannerState, removeStudentPlan, setMainTargetStudent } from "./planner-state.js?v=dashboard-20260824-data-refresh-v113";
+import { calculateRelationshipSourceForecast, getEligibleRelationshipSources, getStudentReleaseStatus, normalizeCnProgress } from "./release-state.js?v=dashboard-20260824-data-refresh-v113";
+import { calculateGiftOnlyForecast } from "./gift-only-planner.js?v=dashboard-20260824-data-refresh-v113";
+import { calculatePackageEfficiency, calculatePlanningSummary } from "./planning-summary.js?v=dashboard-20260824-data-refresh-v113";
+import { text as t } from "./i18n.js?v=dashboard-20260824-data-refresh-v113";
 
 const ALLOWED_CHANGE_KINDS = new Set([
   // Kept for compatibility with older Harness responses.

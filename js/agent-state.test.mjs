@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { applyPlanningProposal, buildAgentContext, calculateResourceContribution, canReuseConfiguredProxy, extractConversationFacts, mergePlanningProposals, stagePlanningProposal, validatePlanningProposal } from "./agent-state.js";
-import { buildReleaseTimeline, calculateRelationshipSourceForecast, getStudentReleaseStatus, normalizeCnProgress } from "./release-state.js";
+import { buildReleaseTimeline, calculateRelationshipSourceForecast, getDefaultCnProgress, getStudentReleaseStatus, normalizeCnProgress } from "./release-state.js";
 import { createEmptyPlannerState } from "./planner-state.js";
 import { getGiftOnlyPlanningStudents } from "./planner-view.js";
 import { getCnGiftPackageCatalog, getEligibleGiftPackages } from "./package-catalog.js";
@@ -14,9 +14,22 @@ const students = [
 const timeline = buildReleaseTimeline(students);
 const progress = normalizeCnProgress({ cutoffStudentId: 10002 }, timeline, students);
 assert.equal(progress.cutoffRank, 2);
+assert.equal(progress.asOf, null);
 assert.equal(getStudentReleaseStatus(10001, progress, timeline).status, "released");
 assert.equal(getStudentReleaseStatus(10122, progress, timeline).status, "unreleased");
 assert.equal(getStudentReleaseStatus(99999, progress, timeline).status, "unknown");
+
+const datedStudents = students.map((student) => ({ ...student, release_as_of: "2026-08-24" }));
+const datedTimeline = buildReleaseTimeline(datedStudents);
+const automaticProgress = getDefaultCnProgress(datedTimeline, [
+  { ...datedStudents[0], cn_released: true },
+  { ...datedStudents[1], cn_released: true },
+  { ...datedStudents[2], cn_released: false },
+  { ...datedStudents[3], cn_released: false },
+]);
+assert.equal(automaticProgress.cutoffStudentId, 10002);
+assert.equal(automaticProgress.asOf, "2026-08-24");
+assert.equal(automaticProgress.source, "schaledb_cn_release_snapshot");
 
 const data = {
   students,

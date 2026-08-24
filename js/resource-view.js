@@ -1,9 +1,9 @@
-import { localizedName, text as t } from "./i18n.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { formatExp, formatInteger, formatSmartQuantity } from "./render.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { calculateGiftBoxExpectedExp, calculateGiftBoxesExpectedExp } from "./gift-box-state.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { calculateResourceForecast } from "./resource-model.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { calculateRelationshipSourceForecast } from "./release-state.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { safeExternalUrl } from "./url-safety.js?v=dashboard-20260824-synthesis-accounting-v112";
+import { localizedName, text as t } from "./i18n.js?v=dashboard-20260824-data-refresh-v113";
+import { formatExp, formatInteger, formatSmartQuantity } from "./render.js?v=dashboard-20260824-data-refresh-v113";
+import { calculateGiftBoxExpectedExp, calculateGiftBoxesExpectedExp } from "./gift-box-state.js?v=dashboard-20260824-data-refresh-v113";
+import { calculateResourceForecast } from "./resource-model.js?v=dashboard-20260824-data-refresh-v113";
+import { calculateRelationshipSourceForecast } from "./release-state.js?v=dashboard-20260824-data-refresh-v113";
+import { safeExternalUrl } from "./url-safety.js?v=dashboard-20260824-data-refresh-v113";
 
 function escapeHtml(value) {
   return String(value ?? "")

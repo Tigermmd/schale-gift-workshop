@@ -2,8 +2,8 @@ const NORMAL_GIFT_IDS = Array.from({ length: 35 }, (_, index) => 5000 + index);
 const CRAFTABLE_PURPLE_GIFT_IDS = Array.from({ length: 13 }, (_, index) => 5100 + index);
 const SPECIAL_GIFT_IDS = [5996, 5997, 5998, 5999];
 
-// SchaleDB `IsLimited` snapshot (2026-08-12): non-zero values are limited,
-// event-limited, or FES recruitment entries. This metadata is kept separate
+// SchaleDB `IsLimited` snapshot (2026-08-12): values 1–3 are limited,
+// event-limited, or FES recruitment entries; value 4 is permanent. This metadata is kept separate
 // from the Mika gift override so every future student can use the same
 // package rule without making ordinary future students eligible by default.
 export const LIMITED_OR_FES_STUDENT_TYPES = Object.freeze({

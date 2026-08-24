@@ -1,5 +1,5 @@
-import { formatExp, formatInteger } from "./render.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { localizedName, text as t } from "./i18n.js?v=dashboard-20260824-synthesis-accounting-v112&ui=v113";
+import { formatExp, formatInteger } from "./render.js?v=dashboard-20260824-data-refresh-v113";
+import { localizedName, text as t } from "./i18n.js?v=dashboard-20260824-data-refresh-v113&ui=v113";
 
 export const DEFAULT_AGENT_BASE_URL = "https://api.deepseek.com";
 export const DEFAULT_AGENT_MODEL = "deepseek-v4-flash";

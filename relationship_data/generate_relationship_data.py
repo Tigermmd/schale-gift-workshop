@@ -143,6 +143,8 @@ def make_student_preferences(
     result = []
     for student in students_en_by_id.values():
         released = student.get("IsReleased", [False, False, False])
+        limited_types = student.get("IsLimited", [0, 0, 0])
+        jp_limited_type = int(limited_types[REGION_INDEX["jp"]] or 0)
         # Keep the complete SchaleDB student catalog in the snapshot.  CN
         # release state is data on each row, not a generation-time filter;
         # the UI needs unreleased students for gift planning and future
@@ -183,34 +185,36 @@ def make_student_preferences(
                 preferences.append(value)
         preferences.sort(key=lambda item: item["gift_id"])
         all_values.sort(key=lambda item: item["gift_id"])
-        result.append(
-            {
-                "student_id": student["Id"],
-                "name_en": student["Name"],
-                "name_zh_cn": student_zh_cn["Name"],
-                # Backward-compatible alias for older simulator consumers.
-                "name_zh": student_zh_cn["Name"],
-                "path_name": student.get("PathName"),
-                "default_order": student.get("DefaultOrder"),
-                "is_released": released,
-                "is_limited": student.get("IsLimited", [0, 0, 0]),
-                "cn_released": cn_released,
-                "future_only": not cn_released,
-                "release_status": "released" if cn_released else "unreleased",
-                "favor_item_tags": sorted(student_tags),
-                "favor_item_unique_tags": sorted(unique_tags),
-                "favor_alts": student.get("FavorAlts", []),
-                "gift_values": all_values,
-                "preferred_gifts": preferences,
-                "most_favorite_gifts": [
-                    item["gift_id"] for item in preferences if item["reaction_grade"] == 4
-                ],
-                "universal_gifts": [
-                    item["gift_id"] for item in all_values if item["is_universal"]
-                ],
-                "no_matching_gift_in_source": not preferences,
-            }
-        )
+        record = {
+            "student_id": student["Id"],
+            "name_en": student["Name"],
+            "name_zh_cn": student_zh_cn["Name"],
+            # Backward-compatible alias for older simulator consumers.
+            "name_zh": student_zh_cn["Name"],
+            "path_name": student.get("PathName"),
+            "default_order": student.get("DefaultOrder"),
+            "is_released": released,
+            "cn_released": cn_released,
+            "future_only": not cn_released,
+            "release_status": "released" if cn_released else "unreleased",
+            "favor_item_tags": sorted(student_tags),
+            "favor_item_unique_tags": sorted(unique_tags),
+            "favor_alts": student.get("FavorAlts", []),
+            "gift_values": all_values,
+            "preferred_gifts": preferences,
+            "most_favorite_gifts": [
+                item["gift_id"] for item in preferences if item["reaction_grade"] == 4
+            ],
+            "universal_gifts": [
+                item["gift_id"] for item in all_values if item["is_universal"]
+            ],
+            "no_matching_gift_in_source": not preferences,
+        }
+        if jp_limited_type in {1, 2, 3}:
+            record["is_limited"] = limited_types
+            if not cn_released:
+                record["launch_package_eligibility"] = "limited_or_fes"
+        result.append(record)
     return sorted(result, key=lambda student: (student["default_order"] is None, student["default_order"], student["student_id"]))
 
 

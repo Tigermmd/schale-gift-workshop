@@ -1,4 +1,4 @@
-import { normalizePlannerState } from "./planner-state.js?v=dashboard-20260824-synthesis-accounting-v112";
+import { normalizePlannerState } from "./planner-state.js?v=dashboard-20260824-data-refresh-v113";
 
 export const CN_PROGRESS_VERSION = 1;
 
@@ -24,7 +24,7 @@ export function buildReleaseTimeline(students = []) {
     jpReleaseDate: student.jp_release_date ?? null,
     jpRank: Number.isFinite(Number(student.default_order)) ? Number(student.default_order) + 1 : index + 1,
     sources: student.release_sources ?? ["SchaleDB student order snapshot"],
-    asOf: student.release_as_of ?? "2026-08-12",
+    asOf: student.release_as_of ?? null,
   }));
 }
 
@@ -39,8 +39,8 @@ export function getDefaultCnProgress(timeline = [], students = []) {
     server: "cn",
     cutoffStudentId: last?.studentId ?? null,
     cutoffRank: last?.jpRank ?? null,
-    asOf: "2026-08-12",
-    source: "user_selected_cn_cutoff",
+    asOf: last?.asOf ?? timeline.find((entry) => entry?.asOf)?.asOf ?? null,
+    source: "schaledb_cn_release_snapshot",
   };
 }
 
@@ -49,13 +49,14 @@ export function normalizeCnProgress(input, timeline = [], students = []) {
   const source = input && typeof input === "object" ? input : {};
   const cutoffStudentId = integerOr(source.cutoffStudentId, fallback.cutoffStudentId ?? 0) || null;
   const timelineEntry = timeline.find((entry) => Number(entry.studentId) === cutoffStudentId);
+  const asOf = source.asOf || fallback.asOf;
   return {
     version: CN_PROGRESS_VERSION,
     server: "cn",
     cutoffStudentId,
     cutoffRank: timelineEntry?.jpRank ?? (Number.isFinite(Number(source.cutoffRank)) ? Number(source.cutoffRank) : fallback.cutoffRank),
-    asOf: String(source.asOf || fallback.asOf),
-    source: String(source.source || "user_selected_cn_cutoff"),
+    asOf: asOf ? String(asOf) : null,
+    source: String(source.source || (input && typeof input === "object" ? "user_selected_cn_cutoff" : fallback.source)),
   };
 }
 

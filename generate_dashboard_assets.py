@@ -9,16 +9,19 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
+from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
 
 BASE_URL = "https://schaledb.com"
 CRAFTING_URL = "https://schaledb.com/data/crafting.min.json"
 USER_AGENT = "BlueArchiveRelationshipDashboard/1.0"
+MAX_ASSET_BYTES = 32 * 1024 * 1024
 REACTION_ICON_SPECS = [
     (
         f"reaction:{grade}",
@@ -224,28 +227,49 @@ EXTRA_PORTRAIT_STUDENT_IDS = (10122,)
 EXTRA_COLLECTION_STUDENT_IDS = (10122,)
 
 
+def _is_allowed_remote(url: str) -> bool:
+    parsed = urlparse(url)
+    return parsed.scheme == "https" and parsed.netloc == "schaledb.com"
+
+
+def _read_limited(response, limit: int = MAX_ASSET_BYTES) -> bytes:
+    length = response.headers.get("Content-Length")
+    if length and int(length) > limit:
+        raise ValueError("remote asset is too large")
+    payload = response.read(limit + 1)
+    if len(payload) > limit:
+        raise ValueError("remote asset is too large")
+    return payload
+
+
 def read_json(path: Path | str) -> dict:
     if str(path).startswith("http"):
+        if not _is_allowed_remote(str(path)):
+            raise ValueError("remote JSON source is not allowed")
         request = Request(str(path), headers={"User-Agent": USER_AGENT})
         with urlopen(request, timeout=15) as response:
-            return json.load(response)
+            return json.loads(_read_limited(response).decode("utf-8"))
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
 def download(url: str, destination: Path) -> bool:
+    if not _is_allowed_remote(url):
+        return False
     if destination.is_file() and destination.stat().st_size > 0:
         return True
     try:
         request = Request(url, headers={"User-Agent": USER_AGENT})
         with urlopen(request, timeout=15) as response:
             content_type = response.headers.get_content_type()
-            payload = response.read()
+            payload = _read_limited(response)
         if not payload or content_type == "text/html":
             return False
         destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_bytes(payload)
+        temporary = destination.with_suffix(destination.suffix + ".tmp")
+        temporary.write_bytes(payload)
+        os.replace(str(temporary), str(destination))
         return True
-    except (HTTPError, URLError, TimeoutError, ValueError):
+    except (HTTPError, URLError, TimeoutError, OSError, ValueError):
         return False
 
 

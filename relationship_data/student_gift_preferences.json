@@ -11,8 +11,8 @@
     "catalog": "complete_student_catalog"
   },
   "source": {
-    "retrieved_at": "2026-08-18T05:19:56+00:00",
-    "schaledb_build": 1786184496,
+    "retrieved_at": "2026-08-24T02:03:23+00:00",
+    "schaledb_build": 1787355590,
     "items_source": "https://schaledb.com/data/en/items.min.json",
     "students_source": "https://schaledb.com/data/en/students.min.json",
     "items_source_en": "https://schaledb.com/data/en/items.min.json",
@@ -14933,7 +14933,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 13005,
@@ -41664,7 +41669,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10018,
@@ -45725,7 +45735,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 20004,
@@ -46513,7 +46528,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 16005,
@@ -47285,7 +47305,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 20005,
@@ -48846,7 +48871,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10023,
@@ -49678,7 +49708,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 16006,
@@ -50495,7 +50530,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10024,
@@ -54444,7 +54484,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10027,
@@ -55197,7 +55242,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10028,
@@ -58299,7 +58349,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": true
+      "no_matching_gift_in_source": true,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 20008,
@@ -61624,7 +61679,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 20010,
@@ -63281,7 +63341,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10032,
@@ -64126,7 +64191,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 20011,
@@ -65674,7 +65744,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ]
     },
     {
       "student_id": 16008,
@@ -66470,7 +66545,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 20012,
@@ -76272,7 +76352,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10040,
@@ -81758,7 +81843,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10045,
@@ -82549,7 +82639,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ]
     },
     {
       "student_id": 26008,
@@ -83316,7 +83411,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10046,
@@ -84083,7 +84183,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10047,
@@ -84931,7 +85036,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10048,
@@ -90558,7 +90668,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 20019,
@@ -92047,7 +92162,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10054,
@@ -92835,7 +92955,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 16011,
@@ -93655,7 +93780,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 20020,
@@ -97606,7 +97736,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 20022,
@@ -98395,7 +98530,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 16012,
@@ -99198,7 +99338,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10058,
@@ -100852,7 +100997,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ]
     },
     {
       "student_id": 10060,
@@ -104078,7 +104228,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 20024,
@@ -104897,7 +105052,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10063,
@@ -110725,7 +110885,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10068,
@@ -116576,7 +116741,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 20027,
@@ -118243,7 +118413,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 20028,
@@ -119035,7 +119210,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 16013,
@@ -119824,7 +120004,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10074,
@@ -120664,7 +120849,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ]
     },
     {
       "student_id": 20029,
@@ -128196,7 +128386,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": true
+      "no_matching_gift_in_source": true,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10080,
@@ -128906,7 +129101,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": true
+      "no_matching_gift_in_source": true,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 26011,
@@ -129616,7 +129816,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": true
+      "no_matching_gift_in_source": true,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10081,
@@ -135453,7 +135658,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 16014,
@@ -136363,7 +136573,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 20033,
@@ -137204,7 +137419,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10086,
@@ -137994,7 +138214,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ]
     },
     {
       "student_id": 10088,
@@ -142928,7 +143153,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10092,
@@ -143749,7 +143979,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 16015,
@@ -144570,7 +144805,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10093,
@@ -150405,7 +150645,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10097,
@@ -152128,7 +152373,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ]
     },
     {
       "student_id": 10099,
@@ -152981,7 +153231,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 10100,
@@ -153743,7 +153999,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ]
     },
     {
       "student_id": 26013,
@@ -154678,7 +154939,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10101,
@@ -155520,7 +155786,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10102,
@@ -156378,7 +156649,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10103,
@@ -160672,7 +160948,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10106,
@@ -161601,7 +161882,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 16016,
@@ -162454,7 +162740,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10107,
@@ -166913,7 +167204,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 10112,
@@ -167704,7 +168000,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ]
     },
     {
       "student_id": 26014,
@@ -168493,7 +168794,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ]
     },
     {
       "student_id": 10111,
@@ -169394,7 +169700,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ]
     },
     {
       "student_id": 20041,
@@ -170229,7 +170540,12 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ]
     },
     {
       "student_id": 20042,
@@ -176717,7 +177033,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 10118,
@@ -177613,7 +177935,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 16017,
@@ -178445,7 +178773,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 20045,
@@ -185502,7 +185836,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 10124,
@@ -186342,7 +186682,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 26015,
@@ -187196,7 +187542,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 20048,
@@ -188048,7 +188400,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 10122,
@@ -188868,7 +189226,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 10125,
@@ -194958,7 +195322,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 10129,
@@ -195872,7 +196242,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 16018,
@@ -196800,7 +197176,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 10130,
@@ -202020,7 +202402,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 16019,
@@ -202904,7 +203292,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 20054,
@@ -203739,7 +204133,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 10134,
@@ -204639,7 +205039,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 10135,
@@ -205475,7 +205881,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 10136,
@@ -210585,7 +210997,7 @@
       "default_order": 257,
       "is_released": [
         true,
-        false,
+        true,
         false
       ],
       "cn_released": false,
@@ -211423,7 +211835,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 10140,
@@ -211434,7 +211852,7 @@
       "default_order": 258,
       "is_released": [
         true,
-        false,
+        true,
         false
       ],
       "cn_released": false,
@@ -212223,7 +212641,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 16020,
@@ -212234,7 +212658,7 @@
       "default_order": 259,
       "is_released": [
         true,
-        false,
+        true,
         false
       ],
       "cn_released": false,
@@ -213054,7 +213478,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 20058,
@@ -220073,7 +220503,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 10147,
@@ -220957,7 +221393,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        1,
+        1,
+        1
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 26016,
@@ -221825,7 +222267,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        2,
+        2,
+        2
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 10148,
@@ -222741,7 +223189,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     },
     {
       "student_id": 20060,
@@ -223659,7 +224113,13 @@
         5998,
         5999
       ],
-      "no_matching_gift_in_source": false
+      "no_matching_gift_in_source": false,
+      "is_limited": [
+        3,
+        3,
+        3
+      ],
+      "launch_package_eligibility": "limited_or_fes"
     }
   ]
 }

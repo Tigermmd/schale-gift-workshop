@@ -1,5 +1,5 @@
-import { calculatePeriodicResourceAmount, calculateSynthesisStoneSourceForecast, summarizeUnlimitedAssaultRewards } from "./resource-model.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { normalizePlannerState } from "./planner-state.js?v=dashboard-20260824-synthesis-accounting-v112";
+import { calculatePeriodicResourceAmount, calculateSynthesisStoneSourceForecast, summarizeUnlimitedAssaultRewards } from "./resource-model.js?v=dashboard-20260824-data-refresh-v113";
+import { normalizePlannerState } from "./planner-state.js?v=dashboard-20260824-data-refresh-v113";
 
 const STOCK_RESOURCE_IDS = ["manufacturing_stone", "synthesis_stone_gold"];
 const MANAGED_SYNTHESIS_RESOURCE_IDS = new Set([

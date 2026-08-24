@@ -42,6 +42,12 @@ test("the loader exposes every snapshot student and only uses Mika as an overrid
 });
 
 test("future limited/FES students inherit package eligibility from the snapshot metadata", () => {
+  const snapshotLimited = snapshot.students.find((student) => student.student_id === 10099);
+  const snapshotPermanent = snapshot.students.find((student) => student.student_id === 10115);
+  assert.equal(snapshotLimited?.launch_package_eligibility, "limited_or_fes");
+  assert.equal(snapshotLimited?.is_limited?.[0], 3);
+  assert.equal(snapshotPermanent?.launch_package_eligibility, undefined);
+  assert.equal(snapshotPermanent?.is_limited, undefined);
   const catalog = buildStudentCatalog(snapshot.students);
   assert.equal(catalog.find((student) => student.student_id === 10099)?.launch_package_eligibility, "limited_or_fes");
   assert.equal(catalog.find((student) => student.student_id === 10099)?.is_limited?.[0], 3);

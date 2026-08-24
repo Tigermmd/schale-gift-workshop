@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "server": "jp",
-  "asOf": "2026-08-12",
+  "asOf": "2026-08-24",
   "source": "SchaleDB JP students.min.json",
   "sourceUrl": "https://schaledb.com/data/jp/students.min.json",
   "note": "日服 DefaultOrder 快照；同一学生 ID 跨服务器使用。官方公告补充/核验日期后可扩展 releaseDate 与 sources。",

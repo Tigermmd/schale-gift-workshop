@@ -1,8 +1,8 @@
-import { calculatePackageEfficiency } from "./planning-summary.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { resolveStudentFavoriteGiftId } from "./gift-only-planner.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { localizedName, text as t } from "./i18n.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { formatExp, formatInteger, formatQuantity } from "./render.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { safeExternalUrl } from "./url-safety.js?v=dashboard-20260824-synthesis-accounting-v112";
+import { calculatePackageEfficiency } from "./planning-summary.js?v=dashboard-20260824-data-refresh-v113";
+import { resolveStudentFavoriteGiftId } from "./gift-only-planner.js?v=dashboard-20260824-data-refresh-v113";
+import { localizedName, text as t } from "./i18n.js?v=dashboard-20260824-data-refresh-v113";
+import { formatExp, formatInteger, formatQuantity } from "./render.js?v=dashboard-20260824-data-refresh-v113";
+import { safeExternalUrl } from "./url-safety.js?v=dashboard-20260824-data-refresh-v113";
 
 function escapeHtml(value) {
   return String(value ?? "")

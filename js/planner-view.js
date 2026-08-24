@@ -1,7 +1,7 @@
-import { calculatePlanningSummary } from "./planning-summary.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { localizedName, text as t } from "./i18n.js?v=dashboard-20260824-synthesis-accounting-v112&knowledge=v3";
-import { formatExp, formatInteger } from "./render.js?v=dashboard-20260824-synthesis-accounting-v112";
-import { getEligibleRelationshipSources } from "./release-state.js?v=dashboard-20260824-synthesis-accounting-v112";
+import { calculatePlanningSummary } from "./planning-summary.js?v=dashboard-20260824-data-refresh-v113";
+import { localizedName, text as t } from "./i18n.js?v=dashboard-20260824-data-refresh-v113&knowledge=v3";
+import { formatExp, formatInteger } from "./render.js?v=dashboard-20260824-data-refresh-v113";
+import { getEligibleRelationshipSources } from "./release-state.js?v=dashboard-20260824-data-refresh-v113";
 
 function escapeHtml(value) {
   return String(value ?? "")
