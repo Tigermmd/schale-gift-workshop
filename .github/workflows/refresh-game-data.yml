@@ -1,0 +1,88 @@
+name: Refresh game data
+
+on:
+  schedule:
+    - cron: "17 21 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: refresh-game-data
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Refresh snapshots
+        env:
+          UPDATE_REPORT: ${{ runner.temp }}/data-update-report.json
+        run: python3 scripts/update_data.py --apply --with-assets | tee "$UPDATE_REPORT"
+
+      - name: Run data and application tests
+        run: |
+          python3 -m py_compile scripts/*.py relationship_data/*.py generate_dashboard_assets.py harness_server.py test_harness_server.py
+          python3 -m unittest -v
+          node --test js/*.test.mjs
+          git diff --check
+
+      - name: Detect changes
+        id: changes
+        run: |
+          if test -n "$(git status --porcelain)"; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Add run summary
+        env:
+          UPDATE_REPORT: ${{ runner.temp }}/data-update-report.json
+        run: |
+          echo '## Data refresh' >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          cat "$UPDATE_REPORT" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Push update branch
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          UPDATE_BRANCH: data/automated-refresh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$UPDATE_BRANCH"
+          git add -A relationship_data assets
+          git commit -m "data: refresh game snapshots"
+          git fetch origin "$UPDATE_BRANCH:refs/remotes/origin/$UPDATE_BRANCH" || true
+          git push --force-with-lease origin "HEAD:$UPDATE_BRANCH"
+
+      - name: Open or update pull request
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UPDATE_BRANCH: data/automated-refresh
+        run: |
+          pr_number=$(gh pr list --base main --head "$UPDATE_BRANCH" --state open --json number --jq '.[0].number')
+          if test -n "$pr_number"; then
+            gh pr edit "$pr_number" --title "data: refresh students and packages"
+          else
+            gh pr create \
+              --base main \
+              --head "$UPDATE_BRANCH" \
+              --title "data: refresh students and packages" \
+              --body "Automated refresh from SchaleDB and the official CN news API. Generated snapshots passed repository tests. New package announcements remain review candidates until their item mapping is checked."
+          fi

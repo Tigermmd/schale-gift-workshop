@@ -143,6 +143,24 @@ python3 -m py_compile generate_dashboard_assets.py harness_server.py test_harnes
 git diff --check
 ```
 
+## 更新学生与礼包数据
+
+仓库内置独立更新脚本，不需要配置 Agent 或 API Key：
+
+```bash
+# 联网检查 SchaleDB 与国服官网，只显示差异
+python3 scripts/update_data.py
+
+# 校验通过后写入快照，并下载新增学生所需图片
+python3 scripts/update_data.py --apply --with-assets
+```
+
+学生、礼物、制造结果、日服上线顺序和三语名称会一起生成并交叉检查。学生或礼物 ID 减少、制造结果缺少学生、礼物表不完整、三语名称缺失时，脚本会停止写入。
+
+国服礼包从官网公开新闻接口发现。脚本会解析礼包名称、内容、价格、限购和购买时间；新公告写入 `relationship_data/paid_packages_cn_candidates.json` 等待检查。确认物品 ID 和适用学生后，再加入正式的 `paid_packages_cn.json`，因此网页不会直接采用尚未检查的公告解析结果。
+
+GitHub Actions 每天检查一次，也可在 Actions 页手动运行。只有数据发生变化时才会更新 `data/automated-refresh` 分支并创建 Pull Request。
+
 主要目录：
 
 ```text
@@ -150,6 +168,7 @@ index.html                         页面入口
 styles.css / agent.css             工作台与 Agent 样式
 js/                                状态、计算、视图和测试
 relationship_data/                 国服数据快照与来源
+scripts/update_data.py              学生与礼包数据更新入口
 assets/                            学生、礼物、反应脸和 UI 图片缓存
 harness_server.py                  本机页面服务器与 Agent 代理
 generate_dashboard_assets.py       生成本地图片清单

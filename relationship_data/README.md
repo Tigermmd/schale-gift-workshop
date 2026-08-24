@@ -9,6 +9,7 @@
 - `relationship_thresholds.json`：好感 1–100 级的单级需求、累计 EXP、反应标签和礼物/日程相关 EXP。
 - `crafting_expected_relationship.json`：完整三阶段制造中，每位学生的节点期望、礼物产出和每枚制造启动石的期望好感。
 - `paid_packages_cn.json`：国服礼包目录、价格、限购、内容、适用学生和来源快照。
+- `paid_packages_cn_candidates.json`：更新脚本发现但尚未加入正式目录的新礼包公告；没有候选时不会生成。
 - `gift_boxes_cn.json`：礼物盒类型、礼物池、随机规则和物品 ID。
 - `resource_evidence_cn.json`：国服周期资源的来源、计算方式和可配置值。
 - `unlimited_assault_rewards_cn.json`：制约解除作战 1–124 层奖励快照及礼物盒、金色合成石汇总。
@@ -18,6 +19,7 @@
 - `cn_planner_data_to_fill.md`：玩家可直接填写的国服数据问卷。
 - `generate_relationship_data.py`：从 SchaleDB 快照重新生成学生、礼物和偏好数据。
 - `crafting_expected_relationship.py`：读取制造数据并计算三阶段节点期望。
+- `../scripts/update_data.py`：统一更新入口，同时生成学生、礼物、制造、三语名称、上线顺序和礼包公告候选。
 
 ## 礼物匹配
 
